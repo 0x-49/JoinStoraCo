@@ -1,12 +1,40 @@
+/**
+ * File: src/styles/globals.css
+ * Purpose: Global styles and Tailwind CSS configuration
+ * 
+ * This file contains:
+ * 1. Tailwind CSS directives
+ * 2. Custom CSS variables
+ * 3. Theme configuration
+ * 4. Global styles
+ */
+
+/* Tailwind CSS Directives - Required for the framework to function */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   --mode: dark;
+  --space-unit: 1rem;
+  --space-xxs: calc(0.25 * var(--space-unit));
+  --space-xs: calc(0.5 * var(--space-unit));
+  --space-sm: calc(0.75 * var(--space-unit));
+  --space-md: calc(1.25 * var(--space-unit));
+  --space-lg: calc(2 * var(--space-unit));
+  --space-xl: calc(3.25 * var(--space-unit));
+  --space-xxl: calc(5.25 * var(--space-unit));
 }
 
-/* Theme: vibrant */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Theme: accessible-vibrant */
 @layer base {
   :root {
     --background: 220 25% 97%;
@@ -33,7 +61,7 @@
     --chart-3: 190 100% 50%;
     --chart-4: 150 100% 45%;
     --chart-5: 40 100% 50%;
-    --radius: 1.5rem;
+    --radius: clamp(0.5rem, 0.5rem + 0.5vw, 1.5rem);
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -63,10 +91,37 @@
   }
 }
 @layer base {
+  /* Base element styles using Tailwind's @apply directive */
   * {
+    /* Apply border utilities to all elements */
     @apply border-border;
+    scroll-margin-top: var(--space-unit);
   }
   body {
+    /* Apply background and text color utilities */
     @apply bg-background text-foreground;
+    font-size: clamp(1rem, 0.92rem + 0.33vw, 1.125rem);
+    line-height: 1.6;
+  }
+  
+  h1 {
+    font-size: clamp(2.5rem, 1.83rem + 2.33vw, 4rem);
+    line-height: 1.1;
+  }
+  
+  h2 {
+    font-size: clamp(2rem, 1.5rem + 1.67vw, 3rem);
+  }
+  
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: var(--space-xxs);
+  }
+  
+  @media (pointer: coarse) {
+    input, button, a {
+      min-height: 44px;
+      min-width: 44px;
+    }
   }
 }
